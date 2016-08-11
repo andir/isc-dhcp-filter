@@ -4,7 +4,7 @@ from unittest import TestCase
 from isc_dhcp_leases import Lease
 from isc_dhcp_leases.iscdhcpleases import BaseLease
 
-from isc_dhcp_filter import parse
+from isc_dhcp_filter import parse, Leases
 from freezegun import freeze_time
 
 
@@ -61,6 +61,12 @@ class BaseLeaseTester:
 
         l = list(self.leases.filter(lambda x: isinstance(x, BaseLease)))
         self.assertEqual(l, list(self.leases))
+
+    def test_filter_combine(self):
+        combined = Leases(self.leases.v4, self.leases.v6)
+        l = len(list(combined))
+        self.assertGreater(l, 0)
+        self.assertEqual(l, len(list(self.leases)))
 
 
 class TestDhcpd6(LeaseLoaderMixin, BaseLeaseTester, TestCase):

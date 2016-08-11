@@ -12,7 +12,8 @@ class Leases:
     _iter = None
 
     def __init__(self, *args):
-        if len(args) > 1:
+        l = len(args)
+        if l > 1:
             # create a new iterator that can be called again
             def _iter():
                 for argument in args:
@@ -20,8 +21,11 @@ class Leases:
 
             self._leases = None
             self._iter = _iter
-        else:
+        elif l == 1:
             self._leases = args[0]
+        else:
+            # fallback to empty list if there are no leases given
+            self._leases = []
 
     @property
     def current(self):
@@ -117,5 +121,3 @@ class Leases:
             yield from iter(self._leases)
         elif self._iter:
             yield from self._iter()
-        else:
-            raise RuntimeError("Missing _leases and _iter.")
