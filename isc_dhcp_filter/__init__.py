@@ -2,15 +2,14 @@ from isc_dhcp_leases import Lease
 from isc_dhcp_leases import Lease6
 from isc_dhcp_leases import IscDhcpLeases
 
-def parse(*files):
 
+def parse(*files):
     return Leases(*[leases for leases in map(lambda file: IscDhcpLeases(file).get(), files)])
 
 
 class Leases:
     _leases = []
     _iter = None
-    _current_iterator = None
 
     def __init__(self, *args):
         if len(args) > 1:
@@ -108,7 +107,6 @@ class Leases:
             g = (l for l in self if key in l.sets)
 
         return Leases(g)
-
 
     def __iter__(self):
         """
