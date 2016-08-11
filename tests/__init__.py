@@ -7,8 +7,8 @@ from isc_dhcp_leases.iscdhcpleases import BaseLease
 from isc_dhcp_filter import parse
 from freezegun import freeze_time
 
-class LeaseLoaderMixin:
 
+class LeaseLoaderMixin:
     @classmethod
     def setUpClass(cls):
         cls._basepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'files')
@@ -16,6 +16,7 @@ class LeaseLoaderMixin:
     def setUp(self):
         self.leases = parse(os.path.join(self._basepath, self.filename))
         super(LeaseLoaderMixin, self).setUp()
+
 
 class BaseLeaseTester:
     def test_active_valid_current(self):
