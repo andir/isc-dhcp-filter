@@ -106,9 +106,11 @@ class Leases:
         :return:
         """
         if value:
-            g = (l for l in self if l.sets.get(key, None) == value)
+            filter_func = lambda lease: lease.sets.get(key, None) == value
         else:
-            g = (l for l in self if key in l.sets)
+            filter_func = lambda lease: key in lease.sets
+
+        g = filter(filter_func, self)
 
         return Leases(g)
 
