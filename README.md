@@ -1,6 +1,8 @@
 ## This library is still not stable and the API might break your application
 # ISC DHCP Leases Filter Library for Python
 
+![BuildStatus](https://travis-ci.org/andir/isc-dhcp-filter.svg)
+
 This library provides a filter API on top of  [python-isc-dhcp-leases](https://github.com/MartijnBraam/python-isc-dhcp-leases).
 
 The goal is to make parsing ISC DHCP Leases files less repetitive. Leases are parsed once and then only filtered during runtime. In the underlying library actions such as `.current` and `.active` would involve parsing the leases file for each call. Since parsing of larger files is rather slow caching of the raw `Lease` objects is desirable. This is what this library implements.
