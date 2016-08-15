@@ -94,17 +94,17 @@ class TestDhcpd6(LeaseLoaderMixin, BaseLeaseTester, TestCase):
         self.assertEqual(list(leases.invalid), list(leases))
         self.assertEqual(len(list(leases)), 4)
 
-    def test_where_set(self):
-        leases = self.leases.where_set('iana')
+    def test_where_eq(self):
+        leases = self.leases.where_eq('iana')
         self.assertEqual(len(list(leases)), 2)
 
-        leases = self.leases.where_set('iana', '2001:10:30:0:0:0:0:1fe')
+        leases = self.leases.where_eq('iana', '2001:10:30:0:0:0:0:1fe')
         self.assertEqual(len(list(leases)), 1)
 
-        leases = self.leases.where_set('clientduid', '0100011cf710a5002722332b34')
+        leases = self.leases.where_eq('clientduid', '0100011cf710a5002722332b34')
         self.assertEqual(len(list(leases)), 2)
 
-        leases = self.leases.where_set('clientduid')
+        leases = self.leases.where_eq('clientduid')
         self.assertEqual(len(list(leases)), 4)
 
 
@@ -112,6 +112,6 @@ class TestDebian7(LeaseLoaderMixin, BaseLeaseTester, TestCase):
     filename = 'debian7.leases'
 
     def test_vendor_class_identifier(self):
-        leases1 = list(self.leases.where_set('vendor-class-identifier'))
-        leases2 = list(self.leases.where_set('vendor-class-identifier', 'Some Vendor Identifier'))
+        leases1 = list(self.leases.where_eq('vendor-class-identifier'))
+        leases2 = list(self.leases.where_eq('vendor-class-identifier', 'Some Vendor Identifier'))
         self.assertEqual(leases1, leases2)

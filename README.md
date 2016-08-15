@@ -10,8 +10,8 @@ By storing the original leases and passing generators around the leases files on
 ## Features
 
 * re-use parsed leases for usage with multiple filters
-* Chainability of filters (`leases.active.v4.where_set('foo', 'bar')`)
+* Chainability of filters (`leases.active.v4.where_eq('foo', 'bar')`)
 * `.v4` and `.v6` filter which filter by address family
 * `.filter(lambda lease: lease.active == True)` to implement custom filters
-* `.where_set(key[, value])` filter by `set` key/value
+* `.where_eq(key[, value])` filter by `set` key/value
 * `.valid`, `.invalid`, `.active`, `.inactive` filters which use the corresponding lease attributes

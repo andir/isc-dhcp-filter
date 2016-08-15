@@ -98,7 +98,7 @@ class Leases:
         g = (l for l in self if filter_func(l))
         return Leases(g)
 
-    def where_set(self, key, value=None):
+    def where_eq(self, key, value=None):
         """
         Filter leases by supplied set-key and value (if provided)
         :param key: the key in the sets dictionary of the lease
