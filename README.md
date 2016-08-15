@@ -2,7 +2,8 @@
 # ISC DHCP Leases Filter Library for Python
 
 [![BuildStatus](https://travis-ci.org/andir/isc-dhcp-filter.svg)](https://travis-ci.org/andir/isc-dhcp-filter)
-[![Coverage Status](https://coveralls.io/repos/github/andir/isc-dhcp-filter/badge.svg?branch=master)](https://coveralls.io/github/andir/isc-dhcp-filter?branch=master)
+[![Test Coverage](https://codeclimate.com/github/andir/isc-dhcp-filter/badges/coverage.svg)](https://codeclimate.com/github/andir/isc-dhcp-filter/coverage)
+[![Issue Count](https://codeclimate.com/github/andir/isc-dhcp-filter/badges/issue_count.svg)](https://codeclimate.com/github/andir/isc-dhcp-filter)
 
 This library provides a filter API on top of  [python-isc-dhcp-leases](https://github.com/MartijnBraam/python-isc-dhcp-leases).
 

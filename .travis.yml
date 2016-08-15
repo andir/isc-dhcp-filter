@@ -3,11 +3,9 @@ python:
   - "3.4"
   - "3.5"
 install:
-  - pip install coveralls
   - pip install codeclimate-test-reporter
 script:
   - coverage run --source=isc_dhcp_filter setup.py test
   - python setup.py install
 after_success:
-  - coveralls
   - codeclimate-test-reporter
