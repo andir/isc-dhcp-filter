@@ -4,7 +4,8 @@ from isc_dhcp_leases import IscDhcpLeases
 
 
 def parse(*files):
-    return Leases(*[leases for leases in map(lambda file: IscDhcpLeases(file).get(), files)])
+    parsed_files = list(map(lambda file: IscDhcpLeases(file).get(), files))
+    return Leases(*parsed_files)
 
 
 class Leases:
@@ -92,7 +93,8 @@ class Leases:
     def filter(self, filter_func):
         """
         Filter leases by supplied filter function
-        :param filter_func: function that returns true for all values that should be accepted
+        :param filter_func: function that returns true for all
+                            values that should be accepted
         :return:
         """
         g = (l for l in self if filter_func(l))
@@ -102,13 +104,16 @@ class Leases:
         """
         Filter leases by supplied set-key and value (if provided)
         :param key: the key in the sets dictionary of the lease
-        :param value: the value for the supplied key, if None any lease with the key is returned
+        :param value: the value for the supplied key, if None any lease
+                      with the key is returned
         :return:
         """
         if value:
-            filter_func = lambda lease: lease.sets.get(key, None) == value
+            def filter_func(lease):
+                return lease.sets.get(key, None) == value
         else:
-            filter_func = lambda lease: key in lease.sets
+            def filter_func(lease):
+                return key in lease.sets
 
         g = filter(filter_func, self)
 
