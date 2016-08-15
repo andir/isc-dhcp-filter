@@ -65,7 +65,6 @@ class BaseLeaseTester:
     def test_filter_combine(self):
         combined = Leases(self.leases.v4, self.leases.v6)
         l = len(list(combined))
-        self.assertGreater(l, 0)
         self.assertEqual(l, len(list(self.leases)))
 
 
@@ -115,3 +114,7 @@ class TestDebian7(LeaseLoaderMixin, BaseLeaseTester, TestCase):
         leases1 = list(self.leases.where_eq('vendor-class-identifier'))
         leases2 = list(self.leases.where_eq('vendor-class-identifier', 'Some Vendor Identifier'))
         self.assertEqual(leases1, leases2)
+
+class TestEmptyLease(BaseLeaseTester, TestCase):
+    def setUp(self):
+        self.leases = Leases()
