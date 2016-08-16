@@ -1,6 +1,6 @@
+from isc_dhcp_leases import IscDhcpLeases
 from isc_dhcp_leases import Lease
 from isc_dhcp_leases import Lease6
-from isc_dhcp_leases import IscDhcpLeases
 
 
 def parse(*files):
@@ -119,6 +119,13 @@ class Leases:
 
         return Leases(g)
 
+    def count(self):
+        """
+        Returns the count of leases in the current set of leases
+        :return: int count of leases
+        """
+        return len(self)
+
     def __iter__(self):
         """
         Returns an iterator for the current set of leases
@@ -128,3 +135,16 @@ class Leases:
             yield from iter(self._leases)
         elif self._iter:
             yield from self._iter()
+
+    def __len__(self):
+        """
+        Implements __len__
+        If we are dealing with a generator we will expand it into `_leases`
+        :return:
+        """
+        if type(self._leases) is list:
+            return len(self._leases)
+        else:
+            l = list(iter(self))
+            self._leases = l
+            return len(l)

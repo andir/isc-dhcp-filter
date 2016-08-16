@@ -1,11 +1,11 @@
 import os
 from unittest import TestCase
 
+from freezegun import freeze_time
 from isc_dhcp_leases import Lease
 from isc_dhcp_leases.iscdhcpleases import BaseLease
 
 from isc_dhcp_filter import parse, Leases
-from freezegun import freeze_time
 
 
 class LeaseLoaderMixin:
@@ -25,6 +25,15 @@ class BaseLeaseTester:
 
         self.assertEqual(len(active_valid), len(valid_active))
         self.assertEqual(len(active_valid), len(list(self.leases.current)))
+
+    def test_list_twice(self):
+        a = list(self.leases)
+        b = list(self.leases)
+
+        self.assertEqual(a, b)
+
+    def test_len(self):
+        self.assertEqual(len(self.leases), self.leases.count())
 
     def test_v4_filter(self):
         for lease in self.leases.v4:
@@ -65,7 +74,7 @@ class BaseLeaseTester:
     def test_filter_combine(self):
         combined = Leases(self.leases.v4, self.leases.v6)
         l = len(list(combined))
-        self.assertEqual(l, len(list(self.leases)))
+        self.assertEqual(l, len(self.leases))
 
 
 class TestDhcpd6(LeaseLoaderMixin, BaseLeaseTester, TestCase):
@@ -74,18 +83,20 @@ class TestDhcpd6(LeaseLoaderMixin, BaseLeaseTester, TestCase):
     def test_dhcpv6_active(self):
         leases = self.leases
 
-        self.assertEqual(len(list(leases)), 4)
-        self.assertEqual(len(list(leases.active)), 4)
+        self.assertEqual(len(leases), 4)
+        self.assertEqual(len(leases.active), 4)
+        self.assertEqual(len(leases.active), 4)
 
     @freeze_time("2015-07-6 8:15:0")
     def test_dhcpv6_active_valid(self):
         leases = self.leases
 
-        active_valid = list(leases.active.valid)
-        valid_active = list(leases.valid.active)
+        active_valid = leases.active.valid
+        valid_active = leases.valid.active
 
         self.assertEqual(len(active_valid), len(valid_active))
-        self.assertEqual(len(active_valid), len(list(leases.current)))
+        self.assertEqual(len(active_valid), len(leases.current))
+        self.assertEqual(sorted(active_valid, key=id), sorted(valid_active, key=id))
 
     def test_dhcpv6_invalid(self):
         leases = self.leases
@@ -115,6 +126,11 @@ class TestDebian7(LeaseLoaderMixin, BaseLeaseTester, TestCase):
         leases2 = list(self.leases.where_eq('vendor-class-identifier', 'Some Vendor Identifier'))
         self.assertEqual(leases1, leases2)
 
+
 class TestEmptyLease(BaseLeaseTester, TestCase):
     def setUp(self):
         self.leases = Leases()
+
+    def test_lease_count_zero(self):
+        self.assertEqual(self.leases.count(), 0)
+        self.assertEqual(len(self.leases), 0)
