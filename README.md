@@ -19,6 +19,7 @@ By storing the original leases and passing generators around the leases files on
 * `.filter(lambda lease: lease.active == True)` to implement custom filters
 * `.where_eq(key[, value])` filter by `set` key/value
 * `.valid`, `.invalid`, `.active`, `.inactive` filters which use the corresponding lease attributes
+* `.count()` returns the amount of leases
 
 
 ## Installation
