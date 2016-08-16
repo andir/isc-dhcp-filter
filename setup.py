@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="isc-dhcp-filter",
-    version="0.0.1",
+    version="0.0.2",
     description='This library provides a filter API on top of  python-isc-dhcp-leases.',
     install_requires=[
         "isc_dhcp_leases",
