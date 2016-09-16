@@ -1,4 +1,3 @@
-## This library is still not stable and the API might break your application
 # ISC DHCP Leases Filter Library for Python
 
 [![BuildStatus](https://travis-ci.org/andir/isc-dhcp-filter.svg)](https://travis-ci.org/andir/isc-dhcp-filter)
